@@ -27,6 +27,10 @@ describe('Register Use Case', () => {
     })
 
     expect(organization.id).toEqual(expect.any(String))
+    expect(organization.address).toEqual(expect.any(String))
+    expect(organization.address.length).toBeGreaterThan(0)
+    expect(organization.whatsapp).toEqual(expect.any(String))
+    expect(organization.whatsapp.length).toBeGreaterThan(0)
   })
 
   it('should hash organization password upon registration', async () => {
