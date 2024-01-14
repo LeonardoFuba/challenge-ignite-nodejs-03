@@ -1,6 +1,11 @@
-import { Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
-import { Pet, PetsRepository, PAGE_LENGTH } from '../pets-repository'
+import {
+  Pet,
+  PetsRepository,
+  PAGE_LENGTH,
+  Characteristics,
+  PetCreateInput,
+} from '../pets-repository'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public pets: Pet[] = []
@@ -9,15 +14,31 @@ export class InMemoryPetsRepository implements PetsRepository {
     return this.pets.find((pets) => pets.id === id) ?? null
   }
 
-  async searchMany(query: string, page: number) {
+  async searchManyByCity(
+    organizationsIdOnCity: string[],
+    characteristics: Characteristics,
+    page: number,
+  ) {
     return this.pets
-      .filter((item) => item.name.includes(query))
+      .filter((item) => organizationsIdOnCity.includes(item.organization_id))
+      .filter(
+        (item) =>
+          (characteristics.age ? item.age === characteristics.age : true) &&
+          (characteristics.energyLevel
+            ? item.energy_level === characteristics.energyLevel
+            : true) &&
+          (characteristics.independenceLevel
+            ? item.independence_level === characteristics.independenceLevel
+            : true) &&
+          (characteristics.size ? item.size === characteristics.size : true) &&
+          (characteristics.environment
+            ? item.environment === characteristics.environment
+            : true),
+      )
       .slice((page - 1) * PAGE_LENGTH, page * PAGE_LENGTH)
   }
 
-  async create(data: Prisma.PetCreateInput) {
-    const organization = data.organization as { id: string }
-
+  async create(data: PetCreateInput) {
     const newPet = {
       id: data.id ?? randomUUID(),
       created_at: new Date(),
@@ -29,8 +50,8 @@ export class InMemoryPetsRepository implements PetsRepository {
       energy_level: data.energy_level,
       independence_level: data.independence_level,
       environment: data.environment,
-      organization_id: organization.id,
-    } as Pet
+      organization_id: data.organizationId,
+    }
 
     this.pets.push(newPet)
 

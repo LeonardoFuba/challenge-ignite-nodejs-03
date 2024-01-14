@@ -22,6 +22,8 @@ describe('Create Pet Use Case', () => {
       responsible_name: 'John Doe',
       email: 'johndoe@example.com',
       cep: '12345-000',
+      state: 'Example State',
+      city: 'Same City',
       address: 'Same Address Street, 1234',
       latitude: -22.006577,
       longitude: -47.891006,

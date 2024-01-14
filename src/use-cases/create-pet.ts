@@ -1,19 +1,12 @@
-import { Pet, PetsRepository } from '@/repositories/pets-repository'
-
-type Age = 'Filhote' | 'Adulto'
-
-type Size = 'Pequenino' | 'Médio' | 'Grandalhão'
-
-type EnergyLevel =
-  | 'Muito baixa'
-  | 'Baixa'
-  | 'Média'
-  | 'Muita energia'
-  | 'Elétrico'
-
-type IndependenceLevel = 'Baixo' | 'Médio' | 'Alto'
-
-type Environment = 'Ambiente pequeno' | 'Ambiente amplo' | 'Ambiente aberto'
+import {
+  Age,
+  EnergyLevel,
+  Environment,
+  IndependenceLevel,
+  Pet,
+  PetsRepository,
+  Size,
+} from '@/repositories/pets-repository'
 
 interface CreatePetUseCaseRequest {
   name: string
@@ -51,11 +44,7 @@ export class CreatePetUseCase {
       energy_level: energyLevel,
       independence_level: independenceLevel,
       environment,
-      organization: {
-        connect: {
-          id: organizationId,
-        },
-      },
+      organizationId,
     })
 
     return { pet }
