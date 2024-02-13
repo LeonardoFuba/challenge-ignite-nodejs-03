@@ -8,7 +8,7 @@ _funcionalidades da aplicação (visão do usuário final)_
 - [x] Deve ser possível cadastrar um pet;
 - [x] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
 - [x] Deve ser possível filtrar pets por suas características;
-- [] Deve ser possível visualizar detalhes de um pet para adoção;
+- [x] Deve ser possível visualizar detalhes de um pet para adoção;
 - [x] Deve ser possível se cadastrar como uma ORG;
 - [x] Deve ser possível realizar login como uma ORG;
 
@@ -27,5 +27,6 @@ _não partem do cliente (técnicos)_
 
 - [x] A senha do usuário (ORG) precisa estar criptografada;
 - [x] Os dados da aplicação precisa estar persistido em um banco PostgreSQL;
-- [] Todas listas de dados precisam estar paginadas com 20 itens por página;
+- [x] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [] O usuário deve ser identificado por um JWT (JSON Web Token);
+- [] As imagens dos pets precisam ser acessíveis por uma url estática

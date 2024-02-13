@@ -3,13 +3,15 @@ import {
   OrganizationsRepository,
 } from '@/repositories/organizations-repository'
 import { hash } from 'bcryptjs'
-import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
 import { IncompleteDataError } from './errors/incomplete-data-error'
+import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
 
 interface RegisterUseCaseRequest {
   name: string
   email: string
   cep: string
+  state: string
+  city: string
   address: string
   latitude: number
   longitude: number
@@ -28,6 +30,8 @@ export class RegisterUseCase {
     name,
     email,
     cep,
+    state,
+    city,
     address,
     latitude,
     longitude,
@@ -55,6 +59,8 @@ export class RegisterUseCase {
       responsible_name: name,
       email,
       cep,
+      state,
+      city,
       address,
       latitude,
       longitude,

@@ -12,15 +12,15 @@ export class InMemoryOrganizationsRepository
   public organizations: Organization[] = []
 
   async findById(id: string) {
-    return (
-      this.organizations.find((organization) => organization.id === id) ?? null
+    return Promise.resolve(
+      this.organizations.find((organization) => organization.id === id) ?? null,
     )
   }
 
   async findByEmail(email: string) {
-    return (
+    return Promise.resolve(
       this.organizations.find((organization) => organization.email === email) ??
-      null
+        null,
     )
   }
 
@@ -29,13 +29,14 @@ export class InMemoryOrganizationsRepository
       (organization) => organization.city === locations.city,
     )
 
-    return organizations
+    return Promise.resolve(organizations)
   }
 
   async create(data: OrganizationCreateInput) {
     const newOrganization = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       created_at: new Date(),
+      updated_at: new Date(),
       responsible_name: data.responsible_name,
       email: data.email,
       cep: data.cep,
@@ -50,6 +51,6 @@ export class InMemoryOrganizationsRepository
 
     this.organizations.push(newOrganization)
 
-    return newOrganization
+    return Promise.resolve(newOrganization)
   }
 }

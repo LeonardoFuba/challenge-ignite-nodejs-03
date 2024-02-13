@@ -1,8 +1,5 @@
-import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { InMemoryOrganizationsRepository } from '@/repositories/in-memory/in-memory-organizations-repository'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { FetchPetsByCityUseCase } from './fetch-pets-by-city'
-import { CityIsRequiredError } from './errors/city-is-required-error'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { Organization } from '@/repositories/organizations-repository'
 import {
   randomPetAge,
@@ -11,6 +8,9 @@ import {
   randomPetIndependenceLevel,
   randomPetSize,
 } from '@/utils/test/random-pet-characteristics'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { CityIsRequiredError } from './errors/city-is-required-error'
+import { FetchPetsByCityUseCase } from './fetch-pets-by-city'
 
 let petsRepository: InMemoryPetsRepository
 let organizationsRepository: InMemoryOrganizationsRepository
@@ -55,14 +55,13 @@ describe('Fetch Pets Use Case', () => {
 
     await petsRepository.create({
       name: 'Alfredo',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       age: 'Filhote',
       size: 'Médio',
       energy_level: 'Muita energia',
       independence_level: 'Baixo',
       environment: 'Ambiente aberto',
-      organizationId: organization.id,
+      organization_id: organization.id,
     })
 
     const { pets } = await sut.execute({
@@ -84,7 +83,7 @@ describe('Fetch Pets Use Case', () => {
       energy_level: 'Muita energia',
       independence_level: 'Baixo',
       environment: 'Ambiente aberto',
-      organizationId: organization.id,
+      organization_id: organization.id,
     })
 
     await expect(() =>
@@ -103,7 +102,7 @@ describe('Fetch Pets Use Case', () => {
         energy_level: randomPetEnergyLevel(),
         independence_level: randomPetIndependenceLevel(),
         environment: randomPetEnvironment(),
-        organizationId: organization.id,
+        organization_id: organization.id,
       })
     }
 
@@ -130,7 +129,7 @@ describe('Fetch Pets Use Case', () => {
         energy_level: randomPetEnergyLevel(),
         independence_level: randomPetIndependenceLevel(),
         environment: randomPetEnvironment(),
-        organizationId: organization.id,
+        organization_id: organization.id,
       })
     }
 
@@ -159,7 +158,7 @@ describe('Fetch Pets Use Case', () => {
         energy_level: randomPetEnergyLevel(),
         independence_level: randomPetIndependenceLevel(),
         environment: randomPetEnvironment(),
-        organizationId: organization.id,
+        organization_id: organization.id,
       })
     }
 
@@ -190,7 +189,7 @@ describe('Fetch Pets Use Case', () => {
         energy_level: randomPetEnergyLevel(),
         independence_level: randomPetIndependenceLevel(),
         environment: randomPetEnvironment(),
-        organizationId: organization.id,
+        organization_id: organization.id,
       })
     }
 

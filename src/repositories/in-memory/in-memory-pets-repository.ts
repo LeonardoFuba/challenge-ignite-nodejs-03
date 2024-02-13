@@ -1,17 +1,17 @@
 import { randomUUID } from 'crypto'
 import {
-  Pet,
-  PetsRepository,
-  PAGE_LENGTH,
   Characteristics,
+  PAGE_LENGTH,
+  Pet,
   PetCreateInput,
+  PetsRepository,
 } from '../pets-repository'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public pets: Pet[] = []
 
   async findById(id: string) {
-    return this.pets.find((pets) => pets.id === id) ?? null
+    return Promise.resolve(this.pets.find((pets) => pets.id === id) ?? null)
   }
 
   async searchManyByCity(
@@ -19,7 +19,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     characteristics: Characteristics,
     page: number,
   ) {
-    return this.pets
+    const petsOnCity = this.pets
       .filter((item) => organizationsIdOnCity.includes(item.organization_id))
       .filter(
         (item) =>
@@ -36,6 +36,8 @@ export class InMemoryPetsRepository implements PetsRepository {
             : true),
       )
       .slice((page - 1) * PAGE_LENGTH, page * PAGE_LENGTH)
+
+    return Promise.resolve(petsOnCity)
   }
 
   async create(data: PetCreateInput) {
@@ -50,11 +52,11 @@ export class InMemoryPetsRepository implements PetsRepository {
       energy_level: data.energy_level,
       independence_level: data.independence_level,
       environment: data.environment,
-      organization_id: data.organizationId,
+      organization_id: data.organization_id,
     }
 
     this.pets.push(newPet)
 
-    return newPet
+    return Promise.resolve(newPet)
   }
 }

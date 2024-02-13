@@ -9,6 +9,8 @@ export async function createAndAuthenticateUser(app: FastifyInstance) {
       responsible_name: 'John Doe',
       email: 'johndoe@example.com',
       cep: '12345-000',
+      state: 'ZZ',
+      city: 'San Francisco',
       address: 'Same Address Street, 1234',
       latitude: -21.156981,
       longitude: -47.969802,

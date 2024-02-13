@@ -1,9 +1,9 @@
-import { expect, it, describe, beforeEach } from 'vitest'
-import { RegisterUseCase } from './register'
-import { compare } from 'bcryptjs'
 import { InMemoryOrganizationsRepository } from '@/repositories/in-memory/in-memory-organizations-repository'
-import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
+import { compare } from 'bcryptjs'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { IncompleteDataError } from './errors/incomplete-data-error'
+import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
+import { RegisterUseCase } from './register'
 
 let organizationRepository: InMemoryOrganizationsRepository
 let sut: RegisterUseCase
@@ -20,6 +20,8 @@ describe('Register Use Case', () => {
       email: 'johndoe@example.com',
       cep: '12345-000',
       address: 'Same Address Street, 1234',
+      state: 'ZZ',
+      city: 'San Francisco',
       latitude: -21.156981,
       longitude: -47.969802,
       whatsapp: '123456789',
@@ -38,6 +40,8 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       cep: '12345-000',
+      state: 'ZZ',
+      city: 'San Francisco',
       address: 'Same Address Street, 1234',
       latitude: -21.156981,
       longitude: -47.969802,
@@ -60,6 +64,8 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email,
       cep: '12345-000',
+      state: 'ZZ',
+      city: 'San Francisco',
       address: 'Same Address Street, 1234',
       latitude: -21.156981,
       longitude: -47.969802,
@@ -72,6 +78,8 @@ describe('Register Use Case', () => {
         name: 'John Doe',
         email,
         cep: '12345-000',
+        state: 'ZZ',
+        city: 'San Francisco',
         address: 'Same Address Street, 1234',
         latitude: -21.156981,
         longitude: -47.969802,
@@ -87,6 +95,8 @@ describe('Register Use Case', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         cep: '12345-000',
+        state: 'ZZ',
+        city: 'San Francisco',
         address: '',
         latitude: -21.156981,
         longitude: -47.969802,
@@ -102,6 +112,8 @@ describe('Register Use Case', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         cep: '12345-000',
+        state: 'ZZ',
+        city: 'San Francisco',
         address: 'Same Address Street, 1234',
         latitude: -21.156981,
         longitude: -47.969802,
