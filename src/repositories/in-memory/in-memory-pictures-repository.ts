@@ -19,7 +19,7 @@ export class InMemoryPicturesRepository implements PicturesRepository {
   }
 
   async createMany(data: PictureCreateInput[]) {
-    const newPictures = data.map((picture) => {
+    const pictures = data.map((picture) => {
       const newPicture = {
         id: picture.id ?? randomUUID(),
         name: picture.name,
@@ -34,6 +34,12 @@ export class InMemoryPicturesRepository implements PicturesRepository {
       return newPicture
     })
 
-    return Promise.resolve(newPictures)
+    return Promise.resolve(
+      pictures.map((picture) => ({
+        id: picture.id,
+        key: picture.key,
+        url: picture.url,
+      })),
+    )
   }
 }

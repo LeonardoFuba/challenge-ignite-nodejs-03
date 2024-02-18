@@ -19,6 +19,7 @@
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
     "test:e2e": "vitest run --dir src/http",
     "test:e2e:watch": "vitest --dir src/http",
+    "pretest:coverage": "npm run pretest:e2e",
     "test:coverage": "vitest run --dir src --coverage",
     "test:ui": "vitest --ui"
   },
@@ -51,7 +52,7 @@
     "rimraf": "5.0.5",
     "supertest": "6.3.3",
     "tsup": "7.2.0",
-    "tsx": "3.12.7",
+    "tsx": "4.7.1",
     "typescript": "5.1.6",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "0.34.6"

@@ -21,7 +21,7 @@ export class InMemoryRequirementsRepository implements RequirementsRepository {
   }
 
   async createMany(data: RequirementsCreateInput[]) {
-    const newRequirements = data.map((requirement) => {
+    const requirements = data.map((requirement) => {
       const newRequirement = {
         id: randomUUID(),
         value: requirement.value,
@@ -34,6 +34,6 @@ export class InMemoryRequirementsRepository implements RequirementsRepository {
       return newRequirement
     })
 
-    return Promise.resolve(newRequirements)
+    return Promise.resolve(requirements)
   }
 }

@@ -9,9 +9,16 @@ import { searchByCity } from './searchByCity'
 const upload = multer(options)
 
 export async function petsRoutes(app: FastifyInstance) {
-  app.addHook('onRequest', verifyJWT)
+  // app.addHook('onRequest', verifyJWT)
 
-  app.post('/pets', { preHandler: upload.array('petImage') }, create)
+  app.post(
+    '/pets',
+    {
+      preHandler: upload.array('petImage'),
+      onRequest: verifyJWT,
+    },
+    create,
+  )
 
   app.get('/pets/:id/details', details)
   app.get('/pets/byCity', searchByCity)
