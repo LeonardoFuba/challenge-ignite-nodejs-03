@@ -1,17 +1,11 @@
+import { Pet, PetsRepository } from '@/repositories/pets-repository'
 import {
-  Age,
-  EnergyLevel,
-  Environment,
-  IndependenceLevel,
-  Pet,
-  PetsRepository,
-  Size,
-} from '@/repositories/pets-repository'
-import {
+  Picture,
   PictureCreateInput,
   PicturesRepository,
 } from '@/repositories/pictures-repository'
 import {
+  Requirement,
   RequirementsCreateInput,
   RequirementsRepository,
 } from '@/repositories/requirements-repository'
@@ -20,18 +14,21 @@ import { OneOrMorePicturesAreRequiredError } from './errors/one-or-more-pictures
 interface CreatePetUseCaseRequest {
   name: string
   description: string
-  age: Age
-  size: Size
-  energyLevel: EnergyLevel
-  independenceLevel: IndependenceLevel
-  environment: Environment
+  age: string
+  size: string
+  energyLevel: string
+  independenceLevel: string
+  environment: string
   organizationId: string
   pictures: Array<Omit<PictureCreateInput, 'pet_id'>>
   requirements: Array<Omit<RequirementsCreateInput, 'pet_id'>>
 }
 
 interface CreatePetUseCaseResponse {
-  pet: Pet
+  pet: Pet & {
+    pictures: Array<Pick<Picture, 'id' | 'key' | 'url'>>
+    requirements: Array<Requirement>
+  }
 }
 
 export class CreatePetUseCase {
@@ -68,20 +65,26 @@ export class CreatePetUseCase {
       throw new OneOrMorePicturesAreRequiredError()
     }
 
-    await this.picturesRepository.createMany(
+    const petPictures = await this.picturesRepository.createMany(
       pictures.map((props) => ({
         pet_id: pet.id,
         ...props,
       })),
     )
 
-    await this.requirementsRepository.createMany(
+    const petRequirements = await this.requirementsRepository.createMany(
       requirements.map((requirement) => ({
         pet_id: pet.id,
         ...requirement,
       })),
     )
 
-    return { pet }
+    return {
+      pet: {
+        ...pet,
+        pictures: petPictures,
+        requirements: petRequirements,
+      },
+    }
   }
 }
